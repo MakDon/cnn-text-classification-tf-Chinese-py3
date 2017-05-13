@@ -1,15 +1,29 @@
 **[dennybritz's original code](https://github.com/dennybritz/cnn-text-classification-tf) supports python 3,but not support Chinese
 **[indiejoseph's original code](https://github.com/indiejoseph/cnn-text-classification-tf-chinese) supports Chinese,but it does not support python3 and tensorflow 1.1
-I mixed them up.It works.
-
+I mixed them up.
+I dont know how it works.
+But it actually works.
 The highway has been removed because i dont know how to make it work on tf 1.1 
-The following are their original README:
+My graphic card is GTX960 with 2GB memory,it would have two delay.One occurs when writting data before training.The other occurs when the first time evaluate.
+If you have the same delay,please set the TDR Delay to 20.Or the operating system would kill it
+我的古董GTX960只有两个G的显存，所以在加载数据和第一次评估的时候会卡屏
+如果你遇到同样的情况，请把TDR延迟调至20，否则卡两秒就被操作系统结束进程了
 
+**[dennybritz 的代码](https://github.com/dennybritz/cnn-text-classification-tf) 支持 python 3,但不支持中文，训练的准确率只有70%左右
+**[indiejoseph 的代码](https://github.com/indiejoseph/cnn-text-classification-tf-chinese) 支持中文，但不能在python3，tensorflow1.1的平台上运行
+于是我把他们的代码拼起来了
+我不知道为什么
+反正它能跑了
+
+
+
+
+
+
+The following are their original README（Mixed，of coures）:
+以下是他们的README（同样是组合起来了）：
 ## CNN for Chinese Text Classification in Tensorflow
 Sentiment classification forked from [dennybritz/cnn-text-classification-tf](https://github.com/dennybritz/cnn-text-classification-tf), make the data helper supports Chinese language and modified the embedding from word-level to character-level, though that increased vocabulary size, and also i've implemented the [Character-Aware Neural Language Models](http://arxiv.org/pdf/1508.06615v4.pdf) network structure which CNN + Highway network to improve the performance, this version can achieve an accuracy of 98% with the Chinese corpus
-
-
-
 
 **[This code belongs to the "Implementing a CNN for Text Classification in Tensorflow" blog post.](http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/)**
 
@@ -19,6 +33,12 @@ It is slightly simplified implementation of Kim's [Convolutional Neural Networks
 
 - Python 3
 - Tensorflow > 0.12
+- Numpy
+
+##My platform
+
+- python3.5
+- Tensorflow 1.1
 - Numpy
 
 ## Training
