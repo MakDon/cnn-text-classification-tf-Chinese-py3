@@ -6,15 +6,16 @@ But it actually works.
 The highway has been removed because i dont know how to make it work on tf 1.1 
 My graphic card is GTX960 with 2GB memory,it would have two delay.One occurs when writting data before training.The other occurs when the first time evaluate.
 If you have the same delay,please set the TDR Delay to 20.Or the operating system would kill it
-我的古董GTX960只有两个G的显存，所以在加载数据和第一次评估的时候会卡屏
-如果你遇到同样的情况，请把TDR延迟调至20，否则卡两秒就被操作系统结束进程了
+
 
 **[dennybritz 的代码](https://github.com/dennybritz/cnn-text-classification-tf) 支持 python 3,但不支持中文，训练的准确率只有70%左右
 **[indiejoseph 的代码](https://github.com/indiejoseph/cnn-text-classification-tf-chinese) 支持中文，但不能在python3，tensorflow1.1的平台上运行
 于是我把他们的代码拼起来了
 我不知道为什么
 反正它能跑了
-
+Highway 这个层我注释掉了并前后文做了一点修改，因为我不知道怎么样让他在tf 1.1上跑起来，我好菜啊
+我的古董GTX960只有两个G的显存，所以在加载数据和第一次评估的时候会卡屏
+如果你遇到同样的情况，请把TDR延迟调至20，否则卡两秒就被操作系统结束进程了
 
 
 
