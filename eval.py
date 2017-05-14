@@ -1,5 +1,7 @@
 #! /usr/bin/env python
-#-*-coding:utf-8 -*-
+
+import tensorflow as tf
+from tensorflow.python.platform import gfile
 import tensorflow as tf
 import numpy as np
 import os
@@ -9,6 +11,7 @@ import data_helpers
 from text_cnn import TextCNN
 from tensorflow.contrib import learn
 import csv
+import pickle
 
 # Parameters
 # ==================================================
@@ -18,7 +21,7 @@ tf.flags.DEFINE_string("positive_data_file", "./data/chinese/pos_eva.txt", "Data
 tf.flags.DEFINE_string("negative_data_file", "./data/chinese/neg_eva.txt", "Data source for the positive data.")
 
 # Eval Parameters
-tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
+tf.flags.DEFINE_integer("batch_size", 32, "Batch Size (default: 64)")
 tf.flags.DEFINE_string("checkpoint_dir", "", "Checkpoint directory from training run")
 tf.flags.DEFINE_boolean("eval_train", False, "Evaluate on all training data")
 
@@ -34,25 +37,20 @@ for attr, value in sorted(FLAGS.__flags.items()):
     print("{}={}".format(attr.upper(), value))
 print("")
 
-
-
-
-
 # CHANGE THIS: Load data. Load your own data here
-if FLAGS.eval_train:
-    x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
-    y_test = np.argmax(y_test, axis=1)
-else:
-    x_raw = ["a masterpiece four years in the making", "everything is off."]
-    y_test = [1, 0]
+x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
+y_test = np.argmax(y_test, axis=1)
+
 
 # Map data into vocabulary
-vocabulary=pickle.load(open(os.path.join(FLAGS.checkpoint_dir, "..", "vocab"),"r"))
-x_pad=pad_sentences(x_raw)
-x_text = np.array([[vocabulary[word] for word in sentence] for sentence in x_pad])
-#x_test = np.array(list(vocab_processor.transform(x_raw)))
+vocabulary=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "vocab.txt")),"rb"))
+x_pad = data_helpers.pad_sentences(x_raw)
+x_test = np.array([[vocabulary.get(word,0) for word in sentence] for sentence in x_pad])
+print(x_test)
 
 print("\nEvaluating...\n")
+print(vocabulary["<PAD/>"])
+print(x_test)
 
 # Evaluation
 # ==================================================
