@@ -14,8 +14,8 @@ import csv
 # ==================================================
 
 # Data Parameters
-tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the positive data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/chinese/pos_eva.txt", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/chinese/neg_eva.txt", "Data source for the positive data.")
 
 # Eval Parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
@@ -34,6 +34,10 @@ for attr, value in sorted(FLAGS.__flags.items()):
     print("{}={}".format(attr.upper(), value))
 print("")
 
+
+
+
+
 # CHANGE THIS: Load data. Load your own data here
 if FLAGS.eval_train:
     x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
@@ -43,9 +47,10 @@ else:
     y_test = [1, 0]
 
 # Map data into vocabulary
-vocab_path = os.path.join(FLAGS.checkpoint_dir, "..", "vocab")
-vocab_processor = learn.preprocessing.VocabularyProcessor.restore(vocab_path)
-x_test = np.array(list(vocab_processor.transform(x_raw)))
+vocabulary=pickle.load(open(os.path.join(FLAGS.checkpoint_dir, "..", "vocab"),"r"))
+x_pad=pad_sentences(x_raw)
+x_text = np.array([[vocabulary[word] for word in sentence] for sentence in x_pad])
+#x_test = np.array(list(vocab_processor.transform(x_raw)))
 
 print("\nEvaluating...\n")
 

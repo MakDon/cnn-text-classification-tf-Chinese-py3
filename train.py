@@ -8,13 +8,14 @@ import time
 import datetime
 import data_helpers
 from text_cnn import TextCNN
+import pickle
 
 # Parameters
 # ==================================================
 # Data loading params
 tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
-tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the negative data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/chinese/pos.txt", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/chinese/neg.txt", "Data source for the negative data.")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
@@ -47,7 +48,7 @@ print("")
 
 # Load data
 print("Loading data...")
-x, y, vocabulary, vocabulary_inv = data_helpers.load_data()
+x, y, vocabulary, vocabulary_inv = data_helpers.load_data(FLAGS.positive_data_file, FLAGS.negative_data_file)
 # Randomly shuffle data
 np.random.seed(10)
 shuffle_indices = np.random.permutation(np.arange(len(y)))
@@ -127,6 +128,10 @@ with tf.Graph().as_default():
       os.makedirs(checkpoint_dir)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=FLAGS.num_checkpoints)
 
+    #Write vocabulary
+    voc_path=os.path.normcase(os.path.join(out_dir, "vocab.txt"))
+    pickle.dump(vocabulary,open(voc_path,"wb") )
+    
     # Initialize all variables
     sess.run(tf.global_variables_initializer())
 
