@@ -44,7 +44,8 @@ y_test = np.argmax(y_test, axis=1)
 
 # Map data into vocabulary
 vocabulary=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "vocab.txt")),"rb"))
-x_pad = data_helpers.pad_sentences(x_raw)
+sequence_length=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "len.txt")),"rb"))
+x_pad = data_helpers.pad_sentences(x_raw,sequence_length)
 x_test = np.array([[vocabulary.get(word,0) for word in sentence] for sentence in x_pad])
 print(x_test)
 

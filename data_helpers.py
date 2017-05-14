@@ -47,19 +47,18 @@ def load_data_and_labels(positive_data_file,negative_data_file):
   return [x_text, y]
 
 
-def pad_sentences(sentences, padding_word="<PAD/>"):
+def pad_sentences(sentences,sequence_len, padding_word="<PAD/>" ):
   """
   Pads all sentences to the same length. The length is defined by the longest sentence.
   Returns padded sentences.
   """
-  sequence_length = max(len(x) for x in sentences)
   padded_sentences = []
   for i in range(len(sentences)):
     sentence = sentences[i]
-    num_padding = sequence_length - len(sentence)
+    num_padding = sequence_len - len(sentence)
     new_sentence = sentence + [padding_word] * num_padding
     padded_sentences.append(new_sentence)
-  return padded_sentences
+  return [padded_sentences,sequence_len]
 
 
 def build_vocab(sentences):
@@ -92,10 +91,11 @@ def load_data(positive_data_file,negative_data_file):
   """
   # Load and preprocess data
   sentences, labels = load_data_and_labels(positive_data_file,negative_data_file)
-  sentences_padded = pad_sentences(sentences)
+  sequence_length = max(len(x) for x in sentences)
+  sentences_padded , sequence_length=pad_sentences(sentences,sequence_len = sequence_length)
   vocabulary, vocabulary_inv = build_vocab(sentences_padded)
   x, y = build_input_data(sentences_padded, labels, vocabulary)
-  return [x, y, vocabulary, vocabulary_inv]
+  return [x, y, vocabulary, sequence_length]
 
 
 def batch_iter(data, batch_size, num_epochs,shuffle=True):

@@ -48,7 +48,7 @@ print("")
 
 # Load data
 print("Loading data...")
-x, y, vocabulary, vocabulary_inv = data_helpers.load_data(FLAGS.positive_data_file, FLAGS.negative_data_file)
+x, y, vocabulary, sequence_length = data_helpers.load_data(FLAGS.positive_data_file, FLAGS.negative_data_file)
 # Randomly shuffle data
 np.random.seed(10)
 shuffle_indices = np.random.permutation(np.arange(len(y)))
@@ -131,6 +131,8 @@ with tf.Graph().as_default():
     #Write vocabulary
     voc_path=os.path.normcase(os.path.join(out_dir, "vocab.txt"))
     pickle.dump(vocabulary,open(voc_path,"wb") )
+    voc_path=os.path.normcase(os.path.join(out_dir, "len.txt"))
+    pickle.dump(sequence_length,open(voc_path,"wb") )
     
     # Initialize all variables
     sess.run(tf.global_variables_initializer())
