@@ -36,11 +36,12 @@ It is slightly simplified implementation of Kim's [Convolutional Neural Networks
 - Tensorflow > 0.12
 - Numpy
 
-##My platform
+## My platform
 
 - python3.5
 - Tensorflow 1.1
 - Numpy
+- cuDNN 5.1
 
 ## Training
 
