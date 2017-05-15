@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-
+#-*-coding:utf-8 -*-
 import tensorflow as tf
 from tensorflow.python.platform import gfile
 import tensorflow as tf
@@ -12,6 +12,7 @@ from text_cnn import TextCNN
 from tensorflow.contrib import learn
 import csv
 import pickle
+import codecs
 
 # Parameters
 # ==================================================
@@ -45,13 +46,11 @@ y_test = np.argmax(y_test, axis=1)
 # Map data into vocabulary
 vocabulary=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "vocab.txt")),"rb"))
 sequence_length=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "len.txt")),"rb"))
-x_pad = data_helpers.pad_sentences(x_raw,sequence_length)
+x_pad,_ = data_helpers.pad_sentences(x_raw,sequence_length)
 x_test = np.array([[vocabulary.get(word,0) for word in sentence] for sentence in x_pad])
-print(x_test)
+x_readable=np.array([[word.encode('utf-8') for word in sentence] for sentence in x_raw])
 
 print("\nEvaluating...\n")
-print(vocabulary["<PAD/>"])
-print(x_test)
 
 # Evaluation
 # ==================================================
@@ -95,5 +94,5 @@ if y_test is not None:
 predictions_human_readable = np.column_stack((np.array(x_raw), all_predictions))
 out_path = os.path.join(FLAGS.checkpoint_dir, "..", "prediction.csv")
 print("Saving evaluation to {0}".format(out_path))
-with open(out_path, 'w') as f:
+with codecs.open(out_path, 'w',encoding="utf8") as f:
     csv.writer(f).writerows(predictions_human_readable)
