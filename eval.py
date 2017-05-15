@@ -41,11 +41,10 @@ print("")
 # CHANGE THIS: Load data. Load your own data here
 x_raw, y_test = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
 y_test = np.argmax(y_test, axis=1)
-
-
-# Map data into vocabulary
 vocabulary=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "vocab.txt")),"rb"))
 sequence_length=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "len.txt")),"rb"))
+
+# Map data into vocabulary
 x_pad,_ = data_helpers.pad_sentences(x_raw,sequence_length)
 x_test = np.array([[vocabulary.get(word,0) for word in sentence] for sentence in x_pad])
 x_readable=np.array([[word.encode('utf-8') for word in sentence] for sentence in x_raw])
