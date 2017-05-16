@@ -1,0 +1,6 @@
+model_checkpoint_path: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-137000"
+all_model_checkpoint_paths: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-136600"
+all_model_checkpoint_paths: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-136700"
+all_model_checkpoint_paths: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-136800"
+all_model_checkpoint_paths: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-136900"
+all_model_checkpoint_paths: "D:\\cnn-text-classification-tf-chinese-master\\runs\\1494803898\\checkpoints\\model-137000"
