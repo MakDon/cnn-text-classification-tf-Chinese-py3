@@ -20,7 +20,7 @@ Highway 这个层我注释掉了并前后文做了一点修改，因为我不知
 我加了一个pridict.py，用来区分这些句子是不是广东话
 你可以调用自己的存储点来做自己的分类,用法会在下面给出
 
-
+特别鸣谢:睿睿老师和朱敬xua老师
 
 
 The following are their original README（Mixed，of coures）:</br>
