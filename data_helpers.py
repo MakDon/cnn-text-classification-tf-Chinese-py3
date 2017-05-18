@@ -57,6 +57,7 @@ def pad_sentences(sentences,sequence_len, padding_word="<PAD/>" ):
     sentence = sentences[i]
     if len(sentence) <= sequence_len:
       num_padding = sequence_len - len(sentence)
+      new_sentence = []
       new_sentence = sentence + [padding_word] * num_padding
     else:
       new_sentence = sentence[:sequence_len-1]
