@@ -34,7 +34,7 @@ FLAGS._parse_flags()
 # CHANGE THIS: Load data. Load your own data here
 vocabulary=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "vocab.txt")),"rb"))
 sequence_length=pickle.load(open(os.path.abspath(os.path.join(FLAGS.checkpoint_dir, "..", "len.txt")),"rb"))
-def pridict(x_raw):
+def predict(x_raw):
     # Map data into vocabulary
     x_raw = list(x_raw)
     x_raw = [s.strip() for s in x_raw]
@@ -78,7 +78,7 @@ def pridict(x_raw):
     
     return all_predictions
 
-#test pridict
+#test predict
 #========================================
 if __name__ == '__main__':   
     print("\nParameters:")
@@ -86,4 +86,4 @@ if __name__ == '__main__':
         print("{}={}".format(attr.upper(), value))
     print("")
     x_raw = (u"小嘴喳喳里面的玩具！",)
-    print(pridict(x_raw))
+    print(predict(x_raw))
