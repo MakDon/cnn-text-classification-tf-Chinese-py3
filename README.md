@@ -6,10 +6,8 @@ But it actually works.</br>
 The highway has been removed because i dont know how to make it work on tf 1.1 </br>
 My graphic card is GTX960 with 2GB memory,it would have two delay.One occurs when writting data before training.The other occurs when the first time evaluate.  </br>
 If you have the same delay,please set the TDR Delay to 20.Or the operating system would kill it</br>
-And i add predict.py.It is used to pridict if the sentences are cantonese.
-You can load your own checkpoint to make your own classification.
-File_processor Added.
-The usage would be given in follow.
+And i add pridict.py.It is used to pridict if the sentences are cantonese.
+You can load your own checkpoint to make your own classification.The usage would be given in follow.
 
 [dennybritz 的代码](https://github.com/dennybritz/cnn-text-classification-tf) 支持 python 3,但不支持中文，训练的准确率只有70%左右</br>
 [indiejoseph 的代码](https://github.com/indiejoseph/cnn-text-classification-tf-chinese) 支持中文，但不能在python3，tensorflow1.1的平台上运行</br>
@@ -20,9 +18,7 @@ Highway 这个层我注释掉了并前后文做了一点修改，因为我不知
 我的古董GTX960只有两个G的显存，所以在加载数据和第一次评估的时候会卡屏</br>
 如果你遇到同样的情况，请把TDR延迟调至20，否则卡两秒就被操作系统结束进程了</br>
 我加了一个pridict.py，用来区分这些句子是不是广东话
-你可以调用自己的存储点来做自己的分类
-加入了对文件进行批处理的脚本file_process.py
-用法会在下面给出
+你可以调用自己的存储点来做自己的分类,用法会在下面给出
 
 特别鸣谢:睿睿老师和朱敬xua老师
 
@@ -102,21 +98,12 @@ Train:
 
 Replace the checkpoint dir with the output from the training. To use your own data, change the `eval.py` script to load your data.
 
-## predicting
+## pridicting
 
 ```bash
-import predict
+import pridict
 pridict( ( "sentence" , ) )
 ```
-
-## file processing
-```bash
-./file_process 
-```
-
-It would read the ./text.txt and output dir is./output
-checkpoint dir could be edited in predict.py
-
 
 ## References
 
