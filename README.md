@@ -98,11 +98,11 @@ Train:
 
 Replace the checkpoint dir with the output from the training. To use your own data, change the `eval.py` script to load your data.
 
-## pridicting
+## predicting
 
 ```bash
-import pridict
-pridict( ( "sentence" , ) )
+import predict
+predict( ( "sentence" , ) )
 ```
 
 ## References
