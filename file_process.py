@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
-import predict
+from predict import Predictor
 import tensorflow as tf
 import os
 
@@ -16,10 +16,10 @@ tf.flags.DEFINE_integer("readlines_num", 512, "The number of output sentences")
 
 FLAGS = tf.flags.FLAGS
 FLAGS._parse_flags()
-def write_file(line,file,counter=0) : 
+def write_file(line,file,counter=0, sentences_num=0) :
     line = line + "\n"
-    if FLAGS.num_limits : 
-        if counter < sentences_num : 
+    if FLAGS.num_limits :
+        if counter < sentences_num :
             file.write(line)
             return 1
         else : return 0
@@ -29,7 +29,7 @@ def write_file(line,file,counter=0) :
 
 
 
-def classify(file_dir=FLAGS.file_dir,out_dir=FLAGS.out_dir,sentences_num=FLAGS.sentences_num,num_limits = FLAGS.num_limits):
+def classify(predictor, file_dir=FLAGS.file_dir,out_dir=FLAGS.out_dir,sentences_num=FLAGS.sentences_num,num_limits = FLAGS.num_limits):
     input_file = open(os.path.abspath(os.path.join(FLAGS.file_dir, "text.txt")),"r",encoding='utf8')
     pos_file = open(os.path.join(FLAGS.out_dir, "pos.txt"),"w",encoding='utf8')
     neg_file = open(os.path.join(FLAGS.out_dir, "neg.txt"),"w",encoding='utf8')
@@ -45,22 +45,23 @@ def classify(file_dir=FLAGS.file_dir,out_dir=FLAGS.out_dir,sentences_num=FLAGS.s
 
         while (iter * pbatch) < len(lines):
             dlines = lines[iter * pbatch : (iter+1) * pbatch]
-            results = predict(dlines)
+            results = predictor.predict(dlines)
             for i in range(len(results)):
                 if results[i] == 1:
                     # 预测为广东话，把 dlines[i] 写入文件
-                    pos_sentence_counter += write_file(dlines[i],pos_file,pos_sentence_counter)
+                    pos_sentence_counter += write_file(dlines[i],pos_file,pos_sentence_counter, sentences_num)
                 else:
                     # 预测为普通话，同理
-                    neg_sentence_counter += write_file(dlines[i],neg_file,neg_sentence_counter)
+                    neg_sentence_counter += write_file(dlines[i],neg_file,neg_sentence_counter, sentences_num)
             if num_limits :
                 if pos_sentence_counter >= sentences_num and neg_sentence_counter >= sentences_num : break
         iter+=1
-        print("The "+format(pos_sentence_counter+neg_sentence_counter)+" line\n"
-    
+        print("The "+format(pos_sentence_counter+neg_sentence_counter)+" line\n")
+
     pos_file.close()
     neg_file.close()
-    
-if __name__ == '__main__': 
-    classify()            
+
+if __name__ == '__main__':
+    predictor = Predictor()
+    classify(predictor)
     
