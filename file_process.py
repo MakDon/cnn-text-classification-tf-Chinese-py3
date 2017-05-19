@@ -55,9 +55,9 @@ def classify(predictor, file_dir=FLAGS.file_dir,out_dir=FLAGS.out_dir,sentences_
                     neg_sentence_counter += write_file(dlines[i],neg_file,neg_sentence_counter, sentences_num)
             if num_limits :
                 if pos_sentence_counter >= sentences_num and neg_sentence_counter >= sentences_num : break
-        iter+=1
-        print("The "+format(pos_sentence_counter+neg_sentence_counter)+" line\n")
-
+            iter+=1
+            print("The "+format(pos_sentence_counter+neg_sentence_counter)+" line\n")
+        break
     pos_file.close()
     neg_file.close()
 
